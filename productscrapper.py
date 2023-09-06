@@ -31,7 +31,7 @@ async def main():
         csvwriter.writerow(['page_id', 'product_id', 'product_name', 'product_price', 'product_rating', 'product_link'])
 
         # Iterate through 500 pages
-        for page_number in range(1, 3):  # Assuming you want to go through 500 pages
+        for page_number in range(1, 501):  # Assuming you want to go through 500 pages
             page_url = f'https://www.digikala.com/search/?page={page_number}&sort=4'
             await page.goto(page_url)
 
