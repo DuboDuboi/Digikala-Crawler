@@ -32,7 +32,7 @@ class ProductSpider(scrapy.Spider):
             json_data = json.load(json_file)
 
         # Extract product IDs from the JSON data
-        json_product_ids = {item['id'] for item in json_data}
+        json_product_ids = {int(item['id'][0]) if isinstance(item['id'], list) else int(item['id']) for item in json_data}
 
         df = pd.read_csv('F:\Machine Learning\Digikala Scrapper\Python-Crawler\Scraped\products.csv')
         product_codes = df['product_id']
