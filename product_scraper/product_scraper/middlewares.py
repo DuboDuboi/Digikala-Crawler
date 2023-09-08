@@ -8,12 +8,39 @@ from scrapy import signals
 # useful for handling different item types with a single interface
 from itemadapter import is_item, ItemAdapter
 
+import random
+import requests
+
+
+class ProxyRotationMiddleware:
+    def __init__(self, proxies):
+        self.proxies = proxies
+        self.proxy_counter = 0
+        self.pages_per_proxy = 10  # Change this to the desired number of pages per proxy
+
+    @classmethod
+    def from_crawler(cls, crawler, *args, **kwargs):
+        proxies = kwargs.get('proxies', [])
+        return cls(proxies)
+
+    def process_request(self, request, spider):
+        if self.proxies:
+            # Check if it's time to switch to the next proxy
+            if self.proxy_counter >= self.pages_per_proxy:
+                self.proxy_counter = 0
+                random.shuffle(self.proxies)  # Shuffle the list of proxies for randomness
+
+            # Select a proxy
+            request.meta['proxy'] = random.choice(self.proxies)
+            self.proxy_counter += 1
+
+
 
 class ProductScraperSpiderMiddleware:
     # Not all methods need to be defined. If a method is not defined,
     # scrapy acts as if the spider middleware does not modify the
     # passed objects.
-
+    
     @classmethod
     def from_crawler(cls, crawler):
         # This method is used by Scrapy to create your spiders.

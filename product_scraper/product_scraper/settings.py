@@ -91,3 +91,21 @@ ROBOTSTXT_OBEY = False
 REQUEST_FINGERPRINTER_IMPLEMENTATION = "2.7"
 TWISTED_REACTOR = "twisted.internet.asyncioreactor.AsyncioSelectorReactor"
 FEED_EXPORT_ENCODING = "utf-8"
+
+
+PROXY_POOL_ENABLED = True
+
+PROXY_POOL_FILTER_CODE = 'in'
+
+DOWNLOADER_MIDDLEWARES = {
+    # ...
+    # 'scrapy_proxy_pool.middlewares.ProxyPoolMiddleware': 610,
+    # 'scrapy_proxy_pool.middlewares.BanDetectionMiddleware': 620,
+    # ...
+}
+
+DOWNLOAD_DELAY = 1
+AUTOTHROTTLE_ENABLED = True
+AUTOTHROTTLE_START_DELAY = 1
+AUTOTHROTTLE_MAX_DELAY = 600
+AUTOTHROTTLE_TARGET_CONCURRENCY = 4
